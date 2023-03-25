@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+
+import {validate} from "./validate";
 
 const SignUp = () => {
     const [data,setData] = useState({
@@ -7,7 +9,17 @@ const SignUp = () => {
         password:"",
         confirmPassword:"",
         isAccepted:"false"
-    })
+    });
+
+const [errors,setErrors] = useState({})
+
+useEffect(()=>{
+    
+    setErrors(validate(data))
+    console.log(errors)
+
+},[data])
+
     const changeHandler = (e) =>{
         if(e.target.name === "isAccepted"){
 
@@ -18,7 +30,6 @@ const SignUp = () => {
         }
     }
     
-    console.log(data);
     return (
         <div>
             <form>
@@ -35,12 +46,12 @@ const SignUp = () => {
 
                 <div>
                     <label>Password</label>
-                    <input value={data.password} type="text" name="password" onChange={changeHandler}/>
+                    <input value={data.password} type="password" name="password" onChange={changeHandler}/>
                 </div>
 
                 <div>
                     <label>Confirm Password</label>
-                    <input value={data.confirmPassword} type="text" name="confirmPassword" onChange={changeHandler}/>
+                    <input value={data.confirmPassword} type="password" name="confirmPassword" onChange={changeHandler}/>
                 </div>
 
                 <div>
